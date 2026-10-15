@@ -1,5 +1,11 @@
 # @tifan/pi-inline-skills
 
+## 1.0.7
+
+### Patch Changes
+
+- [`67c46d3`](https://github.com/tifandotme/pi-extensions/commit/67c46d37ca1b5aeecf40984119017bde0a0b2578) Thanks [@tifandotme](https://github.com/tifandotme)! - Run built-in slash commands with one Enter when selected from autocomplete.
+
 ## 1.0.6
 
 ### Patch Changes
