@@ -351,7 +351,7 @@ function mergeAutocompleteItems(options: {
   })
 
   return {
-    prefix: options.prefix,
+    prefix: options.current?.prefix ?? `/${options.prefix}`,
     items: items.slice(0, MAX_SUGGESTIONS),
   }
 }
@@ -452,7 +452,10 @@ function createSlashSkillAutocompleteProvider(
 
     applyCompletion(lines, cursorLine, cursorCol, item, prefix) {
       const currentLine = lines[cursorLine] ?? ""
-      const slashPrefixStart = cursorCol - prefix.length - 1
+      const prefixStart = cursorCol - prefix.length
+      const slashPrefixStart = prefix.startsWith("/")
+        ? prefixStart
+        : prefixStart - 1
       const isSlashSkillCompletion =
         item.label.startsWith("skill:") &&
         item.value.startsWith("/") &&
