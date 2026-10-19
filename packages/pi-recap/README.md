@@ -47,7 +47,7 @@ Run `/recap config` to choose a different model.
 
 After you choose a model, `pi-recap` uses only that model. Choose `Use default` in `/recap config` to return to the default.
 
-Display options are saved alongside the model in `pi-recap.json`. Defaults: color `accent`, spacing on, persist on. Use `/recap color default` to restore the default color.
+Display options are saved alongside the model in `pi-recap.json`. Defaults match the original behavior: color `muted`, spacing off, persist off. Set `/recap color accent`, `/recap spacing on`, and `/recap persist on` for a more prominent, longer-lived recap.
 
 You can also edit `$PI_CODING_AGENT_DIR/extensions/pi-recap.json` manually:
 

@@ -74,9 +74,9 @@ export const RECAP_COLORS = [
 export type RecapColor = (typeof RECAP_COLORS)[number]
 
 export const DEFAULT_RECAP_DISPLAY: RecapDisplaySettings = {
-  color: "accent",
-  blankLineAbove: true,
-  persist: true,
+  color: "muted",
+  blankLineAbove: false,
+  persist: false,
 }
 
 export function isRecapColor(value: string): value is RecapColor {
