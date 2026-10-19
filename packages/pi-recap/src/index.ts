@@ -637,11 +637,11 @@ export default function (pi: ExtensionAPI): void {
   pi.on("agent_start", (_event, ctx) => {
     state.runId++
     state.stale = false
-    state.lastRecapCurrent = false
     state.skipNextAwayRecap = false
     clearAwayTimer(state)
     abortPendingGeneration(state)
-    hideRecap(ctx, state)
+    // A visible recap stays until the next genuine user message (handled in
+    // the "input" event), not until the next agent activity of any kind.
     clearNoModelWarning(ctx)
   })
 

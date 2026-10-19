@@ -84,7 +84,8 @@ class PiRecapLine implements Component {
 
     if (width < MIN_RECAP_WIDTH) {
       return [
-        truncateToWidth(this.theme.fg("muted", `${LABEL}${this.recap}`), width),
+        "",
+        truncateToWidth(this.theme.fg("accent", `${LABEL}${this.recap}`), width),
       ]
     }
 
@@ -94,10 +95,13 @@ class PiRecapLine implements Component {
 
     const continuationIndent = " ".repeat(visibleWidth(ICON))
 
-    return contentLines.map((line, index) => {
-      const prefix = index === 0 ? label : continuationIndent
-      return truncateToWidth(this.theme.fg("muted", `${prefix}${line}`), width)
-    })
+    return [
+      "",
+      ...contentLines.map((line, index) => {
+        const prefix = index === 0 ? label : continuationIndent
+        return truncateToWidth(this.theme.fg("accent", `${prefix}${line}`), width)
+      }),
+    ]
   }
 
   private renderLabel(): string {
