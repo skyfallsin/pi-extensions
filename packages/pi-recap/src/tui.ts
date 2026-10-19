@@ -70,10 +70,19 @@ class LoadingRecapLine implements Component {
 class PiRecapLine implements Component {
   private readonly theme: Theme
   private readonly recap: string
+  private readonly color: string
+  private readonly blankLineAbove: boolean
 
-  constructor(theme: Theme, recap: string) {
+  constructor(
+    theme: Theme,
+    recap: string,
+    color: string,
+    blankLineAbove: boolean,
+  ) {
     this.theme = theme
     this.recap = recap
+    this.color = color
+    this.blankLineAbove = blankLineAbove
   }
 
   invalidate(): void {}
@@ -81,11 +90,18 @@ class PiRecapLine implements Component {
   render(width: number): string[] {
     const labelWidth = visibleWidth(LABEL)
     const label = this.renderLabel()
+    const lead = this.blankLineAbove ? [""] : []
 
     if (width < MIN_RECAP_WIDTH) {
       return [
-        "",
-        truncateToWidth(this.theme.fg("accent", `${LABEL}${this.recap}`), width),
+        ...lead,
+        truncateToWidth(
+          this.theme.fg(
+            this.color as Parameters<Theme["fg"]>[0],
+            `${LABEL}${this.recap}`,
+          ),
+          width,
+        ),
       ]
     }
 
@@ -96,10 +112,16 @@ class PiRecapLine implements Component {
     const continuationIndent = " ".repeat(visibleWidth(ICON))
 
     return [
-      "",
+      ...lead,
       ...contentLines.map((line, index) => {
         const prefix = index === 0 ? label : continuationIndent
-        return truncateToWidth(this.theme.fg("accent", `${prefix}${line}`), width)
+        return truncateToWidth(
+          this.theme.fg(
+            this.color as Parameters<Theme["fg"]>[0],
+            `${prefix}${line}`,
+          ),
+          width,
+        )
       }),
     ]
   }
@@ -134,7 +156,11 @@ export function showLoadingWidget(ctx: ExtensionContext): void {
   ctx.ui.setWidget(WIDGET_KEY, (tui, theme) => new LoadingRecapLine(tui, theme))
 }
 
-export function showWidget(ctx: ExtensionContext, recap: string): void {
+export function showWidget(
+  ctx: ExtensionContext,
+  recap: string,
+  options: { color: string; blankLineAbove: boolean },
+): void {
   if (!ctx.hasUI) return
 
   const safeRecap = sanitizeRecapText(recap)
@@ -145,7 +171,8 @@ export function showWidget(ctx: ExtensionContext, recap: string): void {
 
   ctx.ui.setWidget(
     WIDGET_KEY,
-    (_tui, theme) => new PiRecapLine(theme, safeRecap),
+    (_tui, theme) =>
+      new PiRecapLine(theme, safeRecap, options.color, options.blankLineAbove),
   )
 }
 
