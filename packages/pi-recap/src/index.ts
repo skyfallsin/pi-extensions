@@ -105,11 +105,11 @@ const RECAP_SUBCOMMANDS: AutocompleteItem[] = [
 
 const RECAP_SYSTEM_PROMPT = `You write compact recaps for an AI coding-agent session.
 
-Given the current session context, produce one plain-text sentence for the user to resume later.
+Given the current session context, produce a compact plain-text recap for the user to resume later.
 Start with the user's goal or reason for the session, inferred from user messages. Do not start with the assistant's answer.
-Then include the current outcome, important decision, touched file, blocker, or likely next action only if it helps resume.
+Then cover the full arc that matters for resuming: current outcome, important decisions, touched files, blockers, and likely next actions.
 Prefer: Goal/purpose. Current state. Next action.
-Target about 160 characters. Stay under 240 characters.
+Write as many short sentences as the session needs, but stay concise and under about 600 characters.
 Do not add a label or prefix. Do not use markdown. Do not mention yourself as "the assistant".
 
 Good: Deciding whether pi-inline-skills should switch from $skill to /skill. Recommendation is / only with commands winning; next decide whether leading /skill should expand.
